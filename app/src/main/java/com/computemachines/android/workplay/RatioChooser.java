@@ -37,15 +37,10 @@ public class RatioChooser extends DialogFragment {
         builder.setItems(new String[]{"1:1", "1:2", "1:3", "1:4", "1:5", "1:6"}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ((ClockingActivity)getActivity()).setGoalRatioDenom(which+1);
+//                ((ClockingActivity)getActivity()).setGoalRatioDenom(which+1);
                 dismiss();
             }
         });
         return builder.create();
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog){
-        ((ClockingActivity)getActivity()).delayedHide(0);
     }
 }

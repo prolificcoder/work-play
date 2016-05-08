@@ -11,11 +11,12 @@ import android.widget.Button;
  */
 public class TimeButton extends Button {
     private static Context context;
+
+    private String label;
     public void setLabel(String label) {
         this.label = label;
     }
 
-    private String label;
     public TimeButton(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -35,7 +36,7 @@ public class TimeButton extends Button {
 
         long number = 1;
         if(label == "Work") {
-            number = ((ClockingActivity) context).getGoalRatioDenom();
+//            number = ((ClockingActivity) context).getGoalRatioDenom();
         }
         Paint ratioPaint = new Paint();
         ratioPaint.set(getPaint());
