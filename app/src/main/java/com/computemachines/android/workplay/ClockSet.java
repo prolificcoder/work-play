@@ -11,10 +11,10 @@ import java.util.NoSuchElementException;
 /**
  * Created by tparker on 5/1/16.
  */
+/** Holds a collection of Clocks with exactly one active once started. */
 public class ClockSet {
     public final String TAG = "ClockSet";
     public ImmutableList<Clock> clocks;
-    // Holds a collection of Clocks with exactly one active once started.
 
     public void restartClocks() {
         for(Clock clock: clocks) {
@@ -22,6 +22,7 @@ public class ClockSet {
             clock.setActive(false);
         }
     }
+    /** Registers 'listener' with each clock. */
     public void register(Clock.TickListener listener) {
         for(Clock clock: clocks) {
             clock.register(listener);

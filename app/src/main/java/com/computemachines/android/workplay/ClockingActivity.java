@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.NoSuchElementException;
 
+/** The main activity. Bundles time working with time playing. */
 public class ClockingActivity extends AppCompatActivity {
     private static final String TAG = "ClockingActivity";
     public static ClockingActivity singleton;
@@ -33,6 +34,7 @@ public class ClockingActivity extends AppCompatActivity {
 
     private MyClockSet clocks;
 
+    /** Post this to this.handler to update the UI */
     Runnable updateUI = new Runnable() {
         @Override
         public void run() {
@@ -92,6 +94,8 @@ public class ClockingActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
+    /** Must trigger onActivate for a recovered active clock to normalize UI state .*/
     @Override
     public void onResume() {
         super.onResume();
@@ -117,6 +121,8 @@ public class ClockingActivity extends AppCompatActivity {
         Log.v(TAG, "onDestroy");
         super.onDestroy();
     }
+
+    /** Sets clocks to new recovered 'MyClockSet'. Does not recover UI state. */
     private void attemptRestoreClocks() {
         Log.v(TAG, "attemptRestoreClocks");
         Gson gson = new Gson();
@@ -135,6 +141,7 @@ public class ClockingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    /** Saves clock state. Call 'attemptRestoreClocks()' to recover */
     private void saveClocks() {
         Log.v(TAG, "saveClocks");
         Gson gson = new Gson();
@@ -156,6 +163,7 @@ public class ClockingActivity extends AppCompatActivity {
     }
 }
 
+/** The default set of clocks for this application. */
 class MyClockSet extends ClockSet {
     final Clock work, play, pause;
 
@@ -173,6 +181,8 @@ class MyClockSet extends ClockSet {
         clocks = ImmutableList.of(work, play, pause);
     }
 
+    /** Registers 'ActivationListener' and 'TickListener' callbacks.
+     *  Must be called after 'ClockingActivity' view members and handler is instantiated. */
     public void registerMyDefaults(final ClockingActivity activity) {
         play.register(new ActivationListener() {
             @Override
