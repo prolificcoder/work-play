@@ -1,10 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/actionBarSize"
+    android:background="#424242"/>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fullscreen_content"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_material_dark"
     tools:context="com.computemachines.android.workplay.ClockingActivity">
 
     <com.computemachines.android.workplay.TimeButton
@@ -40,31 +49,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/clocks_stat"
-        android:textColor="@color/abc_primary_text_material_dark"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/upper_button"/>
-
-    <!--<Button-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:id="@+id/button"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_alignRight="@+id/upper_button"-->
-        <!--android:background="@drawable/ic_history" />-->
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/settings"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/upper_button"
-        android:background="@drawable/ic_settings" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/abc_primary_text_material_dark"
         android:text="Small Text"
         android:id="@+id/stat_hint"
         android:layout_above="@+id/clocks_stat"
@@ -72,3 +63,4 @@
         android:layout_alignStart="@+id/clocks_stat" />
 
 </RelativeLayout>
+</LinearLayout>

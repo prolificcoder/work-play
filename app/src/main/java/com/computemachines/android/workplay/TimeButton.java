@@ -31,17 +31,6 @@ public class TimeButton extends Button {
         paint.set(getPaint());
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(30);
-        paint.setLetterSpacing(1);
         canvas.drawText(label, (getLeft()+getRight())/2 - 25, paint.getTextSize()+15, paint);
-
-        long number = 1;
-        if(label == "Work") {
-//            number = ((ClockingActivity) context).getGoalRatioDenom();
-        }
-        Paint ratioPaint = new Paint();
-        ratioPaint.set(getPaint());
-        ratioPaint.setTextAlign(Paint.Align.RIGHT);
-        ratioPaint.setTextSize(30);
-        canvas.drawText(String.format("(%d)", number), getRight() - 35, ratioPaint.getTextSize()+15, ratioPaint);
     }
 }

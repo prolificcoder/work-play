@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,10 +30,10 @@ public class ClockingActivity extends AppCompatActivity {
     final Handler handler = new Handler();
 
     TimeButton lower, upper;
-    Button middle, settings;
+    Button middle;
     TextView stat, stat_hint;
 
-    private MyClockSet clocks;
+    private HourglassClockSet clocks = null;
 
     /** Post this to this.handler to update the UI */
     Runnable updateUI = new Runnable() {
@@ -49,18 +50,17 @@ public class ClockingActivity extends AppCompatActivity {
         ClockingActivity.singleton = this;
 
         setContentView(R.layout.activity_clocking);
-
-        clocks = new MyClockSet();
-        attemptRestoreClocks();
-        clocks.registerMyDefaults(this);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setLogo(R.drawable.ic_action_name);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         lower = (TimeButton) findViewById(R.id.lower_button);
-        lower.setLabel("Work");
+        lower.setLabel("W   o   r   k");
         upper = (TimeButton) findViewById(R.id.upper_button);
-        upper.setLabel("Play");
+        upper.setLabel("P   l   a   y");
         middle = (Button) findViewById(R.id.pause_button);
 
-        settings = (Button) findViewById(R.id.settings);
         stat = (TextView) findViewById(R.id.clocks_stat);
         stat_hint = (TextView) findViewById(R.id.stat_hint);
 
@@ -86,63 +86,68 @@ public class ClockingActivity extends AppCompatActivity {
                 }
             }
         });
-//        settings.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                RatioChooser ratio = new RatioChooser();
-//                ratio.show(getFragmentManager(), "dialog");
-//            }
-//        });
     }
 
     /** Must trigger onActivate for a recovered active clock to normalize UI state .*/
     @Override
     public void onResume() {
         super.onResume();
-        handler.post(updateUI);
-        try {
-            clocks.getActiveClock().registeredListener.onActivate();
-            clocks.getActiveClock().thread.onActivate();
-        } catch(NoSuchElementException e) {
-            Log.v(TAG, "No clocks active");
+
+        if(clocks == null) {
+            clocks = attemptRestoreClocks();
         }
+        handler.post(updateUI);
     }
 
     @Override
     public void onPause() {
-        saveClocks();
+        saveClocks(clocks);
         super.onPause();
     }
 
     @Override
     public void onDestroy() {
+        saveClocks(clocks);
         clocks.close();
 
         Log.v(TAG, "onDestroy");
         super.onDestroy();
     }
 
-    /** Sets clocks to new recovered 'MyClockSet'. Does not recover UI state. */
-    private void attemptRestoreClocks() {
+    /** Sets clocks to new recovered 'HourglassClockSet'. Only call after Views initialized. */
+    private HourglassClockSet attemptRestoreClocks() {
         Log.v(TAG, "attemptRestoreClocks");
         Gson gson = new Gson();
+        HourglassClockSet clocks = null;
         try {
             FileInputStream in = openFileInput("clocks.json");
             JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
             reader.beginArray();
-            clocks = new MyClockSet(
+            clocks = new HourglassClockSet(
                     (Clock)gson.fromJson(reader, Clock.class),
                     (Clock)gson.fromJson(reader, Clock.class),
                     (Clock)gson.fromJson(reader, Clock.class)
             );
+            clocks.registerMyDefaults(this);
+            try {
+                clocks.getActiveClock().registeredListener.onActivate();
+                clocks.getActiveClock().thread.onActivate();
+            } catch(NoSuchElementException e) {
+                Log.v(TAG, "No clocks active");
+            }
             reader.endArray();
             reader.close();
         } catch (IOException | ClassCastException e) {
             e.printStackTrace();
         }
+        if(clocks == null) {
+            clocks = new HourglassClockSet();
+            clocks.registerMyDefaults(this);
+        }
+        return clocks;
     }
     /** Saves clock state. Call 'attemptRestoreClocks()' to recover */
-    private void saveClocks() {
+    private void saveClocks(HourglassClockSet clocks) {
         Log.v(TAG, "saveClocks");
         Gson gson = new Gson();
         String json = gson.toJson(clocks);
@@ -163,66 +168,3 @@ public class ClockingActivity extends AppCompatActivity {
     }
 }
 
-/** The default set of clocks for this application. */
-class MyClockSet extends ClockSet {
-    final Clock work, play, pause;
-
-    MyClockSet() {
-        work = new Clock();
-        play = new Clock();
-        pause = new Clock();
-        clocks = ImmutableList.of(work, play, pause);
-    }
-
-    public MyClockSet(Clock work, Clock play, Clock pause) {
-        this.work = work;
-        this.play = play;
-        this.pause = pause;
-        clocks = ImmutableList.of(work, play, pause);
-    }
-
-    /** Registers 'ActivationListener' and 'TickListener' callbacks.
-     *  Must be called after 'ClockingActivity' view members and handler is instantiated. */
-    public void registerMyDefaults(final ClockingActivity activity) {
-        play.register(new ActivationListener() {
-            @Override
-            public void onActivate() {
-                activity.upper.setEnabled(false);
-            }
-
-            @Override
-            public void onDeactivate() {
-                activity.upper.setEnabled(true);
-            }
-        });
-        work.register(new ActivationListener() {
-            @Override
-            public void onActivate() {
-                activity.lower.setEnabled(false);
-            }
-
-            @Override
-            public void onDeactivate() {
-                activity.lower.setEnabled(true);
-            }
-        });
-        pause.register(new ActivationListener() { // middle button is never disabled
-            @Override
-            public void onActivate() {
-                activity.middle.setBackgroundResource(R.drawable.ic_replay);
-            }
-
-            @Override
-            public void onDeactivate() {
-                activity.middle.setBackgroundResource(android.R.drawable.ic_media_pause);
-            }
-        });
-        register(new Clock.TickListener() {
-            @Override
-            public void onTick() {
-                activity.handler.post(activity.updateUI);
-            }
-        });
-    }
-
-}
