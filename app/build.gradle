@@ -33,4 +33,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.+'
     compile 'com.google.guava:guava:19.0'
     compile 'com.google.code.gson:gson:2.6.2'
+    androidTestCompile (name:'cloudtestingscreenshotter_lib', ext:'aar')
 }

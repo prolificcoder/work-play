@@ -128,10 +128,13 @@ public class ClockingActivity extends AppCompatActivity {
                     (Clock)gson.fromJson(reader, Clock.class),
                     (Clock)gson.fromJson(reader, Clock.class)
             );
+            Log.v("after fromJson", gson.toJson(clocks.work));
             clocks.registerMyDefaults(this);
+            Log.v("after register", gson.toJson(clocks.work));
             try {
                 clocks.getActiveClock().registeredListener.onActivate();
-                clocks.getActiveClock().thread.onActivate();
+                clocks.getActiveClock().thread.resumeTicking();
+                Log.v("after onActivate", gson.toJson(clocks.work));
             } catch(NoSuchElementException e) {
                 Log.v(TAG, "No clocks active");
             }

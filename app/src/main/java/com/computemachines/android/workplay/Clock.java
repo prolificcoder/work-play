@@ -2,6 +2,7 @@ package com.computemachines.android.workplay;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import java.util.GregorianCalendar;
 
@@ -59,7 +60,7 @@ public class Clock {
                 totalTime += (currentTime-lastTick);
                 lastTick = currentTime;
                 registeredTickListener.onTick();
-
+                Log.v("ClockTick", String.format("totalTime=%d, lastTick=%d", totalTime, lastTick));
                 // suggest tick at the next whole second. do not expect
                 if(isActive) {
                     long mod = currentTime%1000;
@@ -82,13 +83,19 @@ public class Clock {
 
         @Override
         public void onActivate() {
-            handler.removeCallbacks(tick);
             lastTick = Clock.getCurrentTime();
-            handler.post(tick);
+            resumeTicking();
         }
 
         @Override
         public void onDeactivate() {
+//            resumeTicking(); // Not sure why this is here.
+        }
+
+        /** Triggers the start of the tick cycle.
+         *  Use once clock goes active, or if the ticks were stopped despite active clock.
+         */
+        public void resumeTicking() {
             handler.removeCallbacks(tick);
             handler.post(tick);
         }
