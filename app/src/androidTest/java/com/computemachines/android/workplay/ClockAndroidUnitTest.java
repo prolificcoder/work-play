@@ -2,6 +2,7 @@ package com.computemachines.android.workplay;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.google.android.libraries.cloudtesting.screenshots.ScreenShotter;
 import com.google.gson.Gson;
 
 import org.junit.Before;

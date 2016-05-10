@@ -29,9 +29,9 @@ public class ClockingActivity extends AppCompatActivity {
 
     final Handler handler = new Handler();
 
-    TimeButton lower, upper;
+    View lower, upper;
     Button middle;
-    TextView stat, stat_hint;
+    TextView stat, stat_hint, play_timer, work_timer;
 
     private HourglassClockSet clocks = null;
 
@@ -39,8 +39,8 @@ public class ClockingActivity extends AppCompatActivity {
     Runnable updateUI = new Runnable() {
         @Override
         public void run() {
-            upper.setText(Clock.formatTime(clocks.play.getTotalTime()));
-            lower.setText(Clock.formatTime(clocks.work.getTotalTime()));
+            play_timer.setText(Clock.formatTime(clocks.play.getTotalTime()));
+            work_timer.setText(Clock.formatTime(clocks.work.getTotalTime()));
         }
     };
 
@@ -55,11 +55,11 @@ public class ClockingActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.drawable.ic_action_name);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        lower = (TimeButton) findViewById(R.id.lower_button);
-        lower.setLabel("W   o   r   k");
-        upper = (TimeButton) findViewById(R.id.upper_button);
-        upper.setLabel("P   l   a   y");
+        lower = (View) findViewById(R.id.work_view);
+        upper = (View) findViewById(R.id.play_view);
         middle = (Button) findViewById(R.id.pause_button);
+        work_timer = (TextView) findViewById(R.id.work_timer);
+        play_timer = (TextView) findViewById(R.id.play_timer);
 
         stat = (TextView) findViewById(R.id.clocks_stat);
         stat_hint = (TextView) findViewById(R.id.stat_hint);

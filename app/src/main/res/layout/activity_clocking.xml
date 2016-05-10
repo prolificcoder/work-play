@@ -7,23 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/actionBarSize"
-    android:background="#424242"/>
+    android:background="@color/background_material_dark"/>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fullscreen_content"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.computemachines.android.workplay.ClockingActivity">
-
-    <com.computemachines.android.workplay.TimeButton
-        android:text="New Button"
-        android:id="@+id/upper_button"
-        style="@style/TimeButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/pause_button"
-        android:layout_alignParentStart="true" />
+    tools:context="com.computemachines.android.workplay.ClockingActivity"
+    android:background="@color/background_material_light">
 
     <Button
         android:layout_width="50dp"
@@ -31,16 +23,7 @@
         android:id="@+id/pause_button"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_pause" />
-
-    <com.computemachines.android.workplay.TimeButton
-        android:text="New Button"
-        android:id="@+id/lower_button"
-        style="@style/TimeButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
-        android:layout_below="@+id/pause_button" />
+        android:background="@drawable/ic_pause_black_48dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +33,7 @@
         android:text="Medium Text"
         android:id="@+id/clocks_stat"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/upper_button"/>
+        android:textColor="@color/abc_primary_text_material_light" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,7 +43,91 @@
         android:id="@+id/stat_hint"
         android:layout_above="@+id/clocks_stat"
         android:layout_alignLeft="@+id/clocks_stat"
-        android:layout_alignStart="@+id/clocks_stat" />
+        android:layout_alignStart="@+id/clocks_stat"
+        android:textColor="@color/secondary_text_default_material_light" />
+
+    <RelativeLayout
+        android:id="@+id/play_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="false"
+        android:layout_above="@+id/pause_button"
+        android:layout_margin="10dp"
+        android:background="@color/buttonReleased"
+        android:layout_alignWithParentIfMissing="false">
+
+        <TextView
+            style="@style/timerlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="P  l  a  y"
+            android:id="@+id/play_label"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:maxLines="1"
+            android:layout_centerHorizontal="true"
+            android:focusable="false"/>
+
+        <TextView
+            style="@style/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0:00:00"
+            android:id="@+id/play_timer"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="1"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:focusable="false" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/work_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/buttonReleased"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/pause_button"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp">
+
+        <TextView
+            style="@style/timerlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="W  o  r  k"
+            android:id="@+id/work_label"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:focusable="false"/>
+
+        <TextView
+            style="@style/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0:00:00"
+            android:id="@+id/work_timer"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="1"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:focusable="false"/>
+    </RelativeLayout>
 
 </RelativeLayout>
 </LinearLayout>

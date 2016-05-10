@@ -87,9 +87,12 @@ public class Clock {
             resumeTicking();
         }
 
+        /** Should be called after isActive set to false.
+         *  Cancels the current tick, does one last (partial) tick then stops
+         */
         @Override
         public void onDeactivate() {
-//            resumeTicking(); // Not sure why this is here.
+            resumeTicking();
         }
 
         /** Triggers the start of the tick cycle.

@@ -27,33 +27,37 @@ class HourglassClockSet extends ClockSet {
             @Override
             public void onActivate() {
                 activity.upper.setEnabled(false);
+                activity.upper.setBackgroundColor(activity.getResources().getColor(R.color.buttonPushed));
             }
 
             @Override
             public void onDeactivate() {
                 activity.upper.setEnabled(true);
+                activity.upper.setBackgroundColor(activity.getResources().getColor(R.color.buttonReleased));
             }
         });
         work.register(new ActivationListener() {
             @Override
             public void onActivate() {
                 activity.lower.setEnabled(false);
+                activity.lower.setBackgroundColor(activity.getResources().getColor(R.color.buttonPushed));
             }
 
             @Override
             public void onDeactivate() {
                 activity.lower.setEnabled(true);
+                activity.lower.setBackgroundColor(activity.getResources().getColor(R.color.buttonReleased));
             }
         });
-        pause.register(new ActivationListener() { // middle button is never disabled
+        pause.register(new ActivationListener() {
             @Override
             public void onActivate() {
-                activity.middle.setBackgroundResource(R.drawable.ic_replay);
+                activity.middle.setBackgroundResource(R.drawable.ic_refresh_black_48dp);
             }
 
             @Override
             public void onDeactivate() {
-                activity.middle.setBackgroundResource(android.R.drawable.ic_media_pause);
+                activity.middle.setBackgroundResource(R.drawable.ic_pause_black_48dp);
             }
         });
         register(new Clock.TickListener() {

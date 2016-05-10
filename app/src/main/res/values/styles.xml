@@ -10,11 +10,11 @@
         <item name="android:windowActionBar">false</item>
     </style>
 
-    <style name="TimeButton">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_margin">10dp</item>
+    <style name="timerlabel">
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="timer">
         <item name="android:textSize">50dp</item>
     </style>
 
