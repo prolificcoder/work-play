@@ -60,7 +60,7 @@ public class Clock {
                 totalTime += (currentTime-lastTick);
                 lastTick = currentTime;
                 registeredTickListener.onTick();
-                Log.v("ClockTick", String.format("totalTime=%d, lastTick=%d", totalTime, lastTick));
+
                 // suggest tick at the next whole second. do not expect
                 if(isActive) {
                     long mod = currentTime%1000;

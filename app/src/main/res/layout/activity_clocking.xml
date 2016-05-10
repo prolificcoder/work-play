@@ -129,5 +129,18 @@
             android:focusable="false"/>
     </RelativeLayout>
 
+    <Spinner
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+
+        android:layout_alignTop="@+id/pause_button"
+        android:layout_alignBottom="@+id/pause_button"
+        style="@android:style/Widget.Holo.Light.Spinner"
+        />
+
 </RelativeLayout>
 </LinearLayout>
