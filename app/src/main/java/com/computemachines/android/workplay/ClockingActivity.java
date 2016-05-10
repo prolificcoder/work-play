@@ -36,6 +36,7 @@ public class ClockingActivity extends AppCompatActivity {
     View lower, upper;
     Button middle;
     TextView stat, stat_hint, play_timer, work_timer;
+    Spinner spinner;
 
     private HourglassClockSet clocks = null;
 
@@ -103,12 +104,18 @@ public class ClockingActivity extends AppCompatActivity {
             }
         });
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> arrayAdapter =
                 ArrayAdapter.createFromResource(this, R.array.ratio_choices,
                         R.layout.spinner_item);
         arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(arrayAdapter);
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                spinner.setSelection(2);
+//            }
+//        }, 10000);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -164,6 +171,7 @@ public class ClockingActivity extends AppCompatActivity {
                         (Clock) gson.fromJson(reader, Clock.class)
                 );
                 alpha = (double) gson.fromJson(reader, double.class);
+                spinner.setSelection((int)(1/alpha - 1));
                 Log.v("after fromJson", gson.toJson(clocks.work));
                 clocks.registerMyDefaults(this);
                 Log.v("after register", gson.toJson(clocks.work));
