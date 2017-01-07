@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
@@ -25,7 +26,8 @@ public class ClockingActivityScreenshotTest {
 
     @Test
     public void takeScreenshot() {
-        onView(withId(R.id.lower)).perform(click());
+        ScreenShotter.takeScreenshot("main_screen_1", activityRule.getActivity());
+        onView(withId(R.id.play_label)).perform(click());
 
         ScreenShotter.takeScreenshot("main_screen_2", activityRule.getActivity());
     }
