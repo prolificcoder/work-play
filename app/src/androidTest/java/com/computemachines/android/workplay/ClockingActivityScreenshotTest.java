@@ -21,6 +21,6 @@ public class ClockingActivityScreenshotTest {
     @Test
     public void takeScreenshot() {
         onView(isRoot());
-        ScreenShotter.takeScreenshot("main_screen_3", activityRule.getActivity());
+        ScreenShotter.takeScreenshot("3", activityRule.getActivity());
     }
 }
